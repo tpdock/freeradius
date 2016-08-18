@@ -4,7 +4,8 @@ RUN apt -y update; apt install -y freeradius freeradius-mysql freeradius-postgre
 
 EXPOSE 1812/udp 1813/udp
 
-ADD templates/default.template /etc/freeradius/sites-available/default
+ADD templates/default.template default.template
+ADD templates/inner-tunnel.template inner-tunnel.template
 ADD templates/radiusd.conf.template radiusd.conf.template
 ADD templates/proxy.conf.template proxy.conf.template
 ADD templates/clients.conf.template clients.conf.template

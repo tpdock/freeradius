@@ -10,9 +10,10 @@ Available configuration environments:
 | RADIUS_LISTEN_IP             	| 127.0.0.1     	| IP address on which to listen                                                         	| radiusd.conf 	|
 | RADIUS_CLIENT_IP             	| 127.0.0.1     	| RADIUS client IP address                                                              	| clients.conf 	|
 | RADIUS_CLIENT_SECRET         	| testing123    	| The shared secret used to "encrypt" and "sign" packets between the NAS and FreeRADIUS 	| clients.conf 	|
-| PROXY_DEFAULT_AUTH_HOST_PORT 	| no            	| The authentication proxy target configuration for DEFAULT realm in form <host>:<port> 	| proxy.conf   	|
-| PROXY_DEFAULT_ACC_HOST_PORT  	| no            	| The accounting proxy target configuration for DEFAULT realm in form <host>:<port>     	| proxy.conf   	|
+| PROXY_DEFAULT_AUTH_HOST_PORT 	| no            	| The authentication proxy target configuration for DEFAULT realm in form host:port	  	| proxy.conf   	|
+| PROXY_DEFAULT_ACC_HOST_PORT  	| no            	| The accounting proxy target configuration for DEFAULT realm in form host:port       		| proxy.conf   	|
 | PROXY_DEFAULT_SECRET         	| no            	| The shared secret                                                                     	| proxy.conf   	|
+| RADIUS_SQL               	| no            	| Enable SQL configuration. To enable SQL set it to `true`                                     	| default/inner-tunnel |
 | RADIUS_DB_HOST               	| localhost     	| Database host                                                                         	| sql.conf     	|
 | RADIUS_DB_PORT               	| 3306          	| Database port                                                                         	| sql.conf     	|
 | RADIUS_DB_NAME               	| radius        	| Database name                                                                         	| sql.conf     	|
@@ -20,7 +21,7 @@ Available configuration environments:
 | RADIUS_DB_PASSWORD           	| radpass       	| Database password                                                                     	| sql.conf     	|
 
 
-##To start the server using default configuration:
+## To start the server using default configuration:
 
 ```
 $ docker run -itd \
@@ -33,7 +34,7 @@ $ docker run -itd \
 
 
 
-##To proxy all requests to some RADIUS home server:
+## To proxy all requests to some RADIUS home server:
 
 ```
 $ docker run -itd \
@@ -48,9 +49,9 @@ $ docker run -itd \
 ```
 
 
-##To start FreeRADIUS with MYSQL
+## To start FreeRADIUS with MYSQL
 
-###Start and configure the MYSQL container `freeradiusdb` first:
+### Start and configure the MYSQL container `freeradiusdb` first:
 
 ```
 $ docker run -itd \
@@ -63,7 +64,7 @@ mysql:latest
 ```
 
 
-###Start FreeRADIUS and link it to MYSQL:
+### Start FreeRADIUS and link it to MYSQL:
 
 ```
 $ docker run -itd \
@@ -72,6 +73,7 @@ $ docker run -itd \
 -e RADIUS_LISTEN_IP=* \
 -e RADIUS_CLIENT_IP=172.17.0.1 \
 -e RADIUS_CLIENT_SECRET=secret \
+-e RADIUS_SQL=true \
 -e RADIUS_DB_NAME=mysql \
 -e RADIUS_DB_NAME=freeradius \
 -e RADIUS_DB_USERNAME=freeradius \
@@ -79,19 +81,19 @@ $ docker run -itd \
 tpdock/freeradius
 ```
 
-###Prepare DB
+### Prepare DB
 
 ```
 docker exec -it freeradius mysql -ufreeradius -pfreeradius -hmysql -e "source /etc/freeradius/sql/mysql/schema.sql" freeradius
 ```
 
-###Create some user `test` with password `test`:
+### Create some user `test` with password `test`:
 
 ```
 docker exec -it freeradius mysql -ufreeradius -pfreeradius -hmysql -e "insert into radcheck (username, attribute, op, value) values ('test', 'Cleartext-Password', ':=', 'test');" freeradius
 ```
 
-###Test it:
+### Test it:
 
 ```
 radtest test test 172.17.0.3 1812 secret

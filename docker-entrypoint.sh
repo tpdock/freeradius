@@ -10,7 +10,6 @@ resp=$(curl http://rancher-metadata/2015-12-19/self/container/primary_ip) && PRI
 if [ -z "$RADIUS_LISTEN_IP" ]; then
   export RADIUS_LISTEN_IP=${PRIVATE_IP:-127.0.0.1}
 fi
-
 envsubst '
           ${RADIUS_LISTEN_IP}
          ' < radiusd.conf.template > /etc/freeradius/radiusd.conf
@@ -81,6 +80,20 @@ envsubst '
          ${RADIUS_DB_PASSWORD}
          ${RADIUS_DB_NAME}
          ' < sql.conf.template > /etc/freeradius/sql.conf
+
+if [ -z "$RADIUS_SQL"]; then
+  export RADIUS_SQL=""
+else
+  export RADIUS_SQL=sql
+fi
+
+envsubst '
+         $RADIUS_SQL
+         ' < default.template > /etc/freeradius/sites-available/default
+envsubst '
+         $RADIUS_SQL
+         ' < inner-tunnel.template > /etc/freeradius/sites-available/inner-tunnel
+
 ####################################################################
 
 exec "$@"

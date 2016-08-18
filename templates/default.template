@@ -174,7 +174,7 @@ authorize {
 	#  is meant to mirror the "users" file.
 	#
 	#  See "Authorization Queries" in sql.conf
-	sql
+	${RADIUS_SQL}
 
 	#
 	#  If you are using /etc/smbpasswd, and are also doing
@@ -403,7 +403,7 @@ accounting {
 	#  Log traffic to an SQL database.
 	#
 	#  See "Accounting queries" in sql.conf
-	sql
+	${RADIUS_SQL}
 
 	#
 	#  If you receive stop packets with zero session length,
@@ -423,7 +423,7 @@ accounting {
 	#  Instead of sending the query to the SQL server,
 	#  write it into a log file.
 	#
-	sql_log
+	#sql_log
 
 	#  Cisco VoIP specific bulk accounting
 #	pgsql-voip
@@ -451,7 +451,7 @@ session {
 
 	#
 	#  See "Simultaneous Use Checking Queries" in sql.conf
-	sql
+	${RADIUS_SQL}
 }
 
 
