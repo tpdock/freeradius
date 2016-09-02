@@ -25,10 +25,21 @@ fi
 if [ -z "$RADIUS_CLIENT_SECRET" ]; then
   export RADIUS_CLIENT_SECRET=testing123
 fi
-
+if [ -z "$RADIUS_CLIENTS" ]; then
+  export RADIUS_CLIENTS=""
+else
+  while IFS=',' read -ra ADDR; do
+      for i in "${ADDR[@]}"; do
+          IFS='@' read SECRET IP <<<$i
+          OUT+=$'client '$IP$' {\n  secret      = '${SECRET}$'\n  require_message_authenticator = no\n}\n\n'
+      done
+  done  <<< "$RADIUS_CLIENTS"
+  export RADIUS_CLIENTS="$OUT"
+fi
 envsubst '
          ${RADIUS_CLIENT_IP}
          ${RADIUS_CLIENT_SECRET}
+         ${RADIUS_CLIENTS}
          ' < clients.conf.template > /etc/freeradius/clients.conf
 ####################################################################
 
