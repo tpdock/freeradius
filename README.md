@@ -5,21 +5,21 @@ Source: https://github.com/tpdock/freeradius
 
 Available configuration environments:
 
-| Environment Name             	| Default Value 	| Description                                                                           	| Config File  	|
-|------------------------------	|---------------	|---------------------------------------------------------------------------------------	|--------------	|
-| RADIUS_LISTEN_IP             	| 127.0.0.1     	| IP address on which to listen                                                         	| radiusd.conf 	|
-| RADIUS_CLIENT_IP             	| 127.0.0.1     	| RADIUS client IP address                                                              	| clients.conf 	|
+| Environment Name              | Default Value   | Description                                                                             | Config File   |
+|-------------------------------|-----------------|-----------------------------------------------------------------------------------------|-------------- |
+| RADIUS_LISTEN_IP              | 127.0.0.1       | IP address on which to listen                                                           | radiusd.conf  |
+| RADIUS_CLIENT_IP              | 127.0.0.1       | RADIUS client IP address                                                                | clients.conf  |
 | RADIUS_CLIENT_SECRET          | testing123      | The shared secret used to "encrypt" and "sign" packets between the NAS and FreeRADIUS   | clients.conf  |
-| RADIUS_CLIENTS         	      | no            	| Option to define many radius clients in form secret1@ip1,secret2@ip2                  	| clients.conf 	|
-| PROXY_DEFAULT_AUTH_HOST_PORT 	| no            	| The authentication proxy target configuration for DEFAULT realm in form host:port	  	| proxy.conf   	|
-| PROXY_DEFAULT_ACC_HOST_PORT  	| no            	| The accounting proxy target configuration for DEFAULT realm in form host:port       		| proxy.conf   	|
-| PROXY_DEFAULT_SECRET         	| no            	| The shared secret                                                                     	| proxy.conf   	|
-| RADIUS_SQL               	| no            	| Enable SQL configuration. To enable SQL set it to `true`                                     	| default/inner-tunnel |
-| RADIUS_DB_HOST               	| localhost     	| Database host                                                                         	| sql.conf     	|
-| RADIUS_DB_PORT               	| 3306          	| Database port                                                                         	| sql.conf     	|
-| RADIUS_DB_NAME               	| radius        	| Database name                                                                         	| sql.conf     	|
-| RADIUS_DB_USERNAME           	| radius        	| Database login                                                                        	| sql.conf     	|
-| RADIUS_DB_PASSWORD           	| radpass       	| Database password                                                                     	| sql.conf     	|
+| RADIUS_CLIENTS                | no              | Option to define many radius clients in form secret1@ip1,secret2@ip2                    | clients.conf  |
+| PROXY_DEFAULT_AUTH_HOST_PORT  | no              | The authentication proxy target configuration for DEFAULT realm in form host:port       | proxy.conf    |
+| PROXY_DEFAULT_ACC_HOST_PORT   | no              | The accounting proxy target configuration for DEFAULT realm in form host:port           | proxy.conf    |
+| PROXY_DEFAULT_SECRET          | no              | The shared secret                                                                       | proxy.conf    |
+| RADIUS_SQL                    | no              | Enable SQL configuration. To enable SQL set it to `true`                                | default/inner-tunnel |
+| RADIUS_DB_HOST                | localhost       | Database host                                                                           | sql.conf      |
+| RADIUS_DB_PORT                | 3306            | Database port                                                                           | sql.conf      |
+| RADIUS_DB_NAME                | radius          | Database name                                                                           | sql.conf      |
+| RADIUS_DB_USERNAME            | radius          | Database login                                                                          | sql.conf      |
+| RADIUS_DB_PASSWORD            | radpass         | Database password                                                                       | sql.conf      |
 
 
 ## To start the server using default configuration:
