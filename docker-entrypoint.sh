@@ -56,12 +56,24 @@ fi
 if [ -n "$PROXY_DEFAULT_SECRET" ]; then
   export PROXY_DEFAULT_SECRET="secret=$PROXY_DEFAULT_SECRET"
 fi
+if [ "$PROXY_NULL_REALM_LOCALLY" = "true" ]; then
+  export PROXY_NULL_REALM_LOCALLY=$'\nrealm NULL {\n}\n'
+else
+  export PROXY_NULL_REALM_LOCALLY=''
+fi
+if [ "$PROXY_DEFAULT_NOSTRIP" = "true" ]; then
+  export PROXY_DEFAULT_NOSTRIP='nostrip'
+else
+  export PROXY_DEFAULT_NOSTRIP=''
+fi
 
 envsubst '
-         ${PROXY_DEFAULT_AUTH_HOST_PORT}
- 	 ${PROXY_DEFAULT_ACC_HOST_PORT}
-	 ${PROXY_DEFAULT_SECRET}
-	 ' < proxy.conf.template > /etc/freeradius/proxy.conf
+    ${PROXY_DEFAULT_AUTH_HOST_PORT}
+    ${PROXY_DEFAULT_ACC_HOST_PORT}
+    ${PROXY_DEFAULT_SECRET}
+    ${PROXY_DEFAULT_NOSTRIP}
+    ${PROXY_NULL_REALM_LOCALLY}
+    ' < proxy.conf.template > /etc/freeradius/proxy.conf
 ####################################################################
 
 
