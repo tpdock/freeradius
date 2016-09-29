@@ -10,6 +10,7 @@ ADD templates/radiusd.conf.template radiusd.conf.template
 ADD templates/proxy.conf.template proxy.conf.template
 ADD templates/clients.conf.template clients.conf.template
 ADD templates/sql.conf.template sql.conf.template
+ADD templates/files.template files.template
 ADD docker-entrypoint.sh docker-entrypoint.sh
 
 ENTRYPOINT ["./docker-entrypoint.sh"]

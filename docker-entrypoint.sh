@@ -13,6 +13,15 @@ fi
 envsubst '
           ${RADIUS_LISTEN_IP}
          ' < radiusd.conf.template > /etc/freeradius/radiusd.conf
+
+if [ -z "$USERS_FILE" ]; then
+  export USERS_FILE='${confdir}/users'
+else
+  if [ ! -f $USERS_FILE ]; then touch $USERS_FILE; fi
+fi
+envsubst '
+          ${USERS_FILE}
+         ' < files.template > /etc/freeradius/modules/files
 ####################################################################
 
 
