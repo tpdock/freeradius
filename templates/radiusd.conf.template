@@ -584,8 +584,7 @@ security {
 #
 #  allowed values: {no, yes}
 #
-proxy_requests  = yes
-$INCLUDE proxy.conf
+${PROXY_ENABLED}
 
 
 # CLIENTS CONFIGURATION

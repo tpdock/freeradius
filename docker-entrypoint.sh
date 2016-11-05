@@ -47,6 +47,11 @@ envsubst '${RADIUS_CLIENTS}
 ####################################################################
 ###  Proxy Configuration                                         ###
 ####################################################################
+if [ "$PROXY_ENABLED" = "true" ]; then
+  export PROXY_ENABLED=$'\nproxy_requests  = yes\n$INCLUDE proxy.conf\n'
+else
+  export PROXY_ENABLED=''
+fi
 if [ -n "$PROXY_DEFAULT_AUTH_HOST_PORT" ]; then
   export PROXY_DEFAULT_AUTH_HOST_PORT="authhost=$PROXY_DEFAULT_AUTH_HOST_PORT"
 fi
@@ -67,6 +72,10 @@ else
   export PROXY_DEFAULT_NOSTRIP=''
 fi
 
+envsubst '
+    ${PROXY_ENABLED}
+    ' < radiusd.conf.template > /etc/freeradius/radiusd.conf
+    
 envsubst '
     ${PROXY_DEFAULT_AUTH_HOST_PORT}
     ${PROXY_DEFAULT_ACC_HOST_PORT}
