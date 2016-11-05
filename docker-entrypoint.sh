@@ -28,12 +28,6 @@ envsubst '
 ####################################################################
 ###  Clients Configuration                                       ###
 ####################################################################
-if [ -z "$RADIUS_CLIENT_IP" ]; then
-  export RADIUS_CLIENT_IP=127.0.0.1
-fi
-if [ -z "$RADIUS_CLIENT_SECRET" ]; then
-  export RADIUS_CLIENT_SECRET=testing123
-fi
 if [ -z "$RADIUS_CLIENTS" ]; then
   export RADIUS_CLIENTS=""
 else
@@ -45,10 +39,7 @@ else
   done  <<< "$RADIUS_CLIENTS"
   export RADIUS_CLIENTS="$OUT"
 fi
-envsubst '
-         ${RADIUS_CLIENT_IP}
-         ${RADIUS_CLIENT_SECRET}
-         ${RADIUS_CLIENTS}
+envsubst '${RADIUS_CLIENTS}
          ' < clients.conf.template > /etc/freeradius/clients.conf
 ####################################################################
 

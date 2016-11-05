@@ -32,11 +32,11 @@ client localhost {
 	#  Allowed values are:
 	#	dotted quad (1.2.3.4)
 	#       hostname    (radius.example.com)
-	ipaddr = ${RADIUS_CLIENT_IP}
+	# ipaddr = ${RADIUS_CLIENT_IP}
 
 	#  OR, you can use an IPv6 address, but not both
 	#  at the same time.
-#	ipv6addr = ::	# any.  ::1 == localhost
+    #	ipv6addr = ::	# any.  ::1 == localhost
 
 	#
 	#  A note on DNS:  We STRONGLY recommend using IP addresses
@@ -70,7 +70,7 @@ client localhost {
 	#  See raddb/sites-available/dynamic-clients for details.
 	#
 
-#	netmask = 32
+    #	netmask = 32
 
 	#
 	#  The shared secret use to "encrypt" and "sign" packets between
@@ -99,7 +99,7 @@ client localhost {
 	#  The default secret below is only for testing, and should
 	#  not be used in any real environment.
 	#
-	secret		= ${RADIUS_CLIENT_SECRET}
+	# secret		= ${RADIUS_CLIENT_SECRET}
 
 	#
 	#  Old-style clients do not send a Message-Authenticator
