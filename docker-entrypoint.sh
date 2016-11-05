@@ -86,19 +86,19 @@ envsubst '
 ####################################################################
 ###    SQL Configuration                                         ###
 ####################################################################
-if [ -z "$RADIUS_DB_HOST"]; then
+if [ -z "$RADIUS_DB_HOST" ]; then
   export RADIUS_DB_HOST=localhost
 fi
-if [ -z "$RADIUS_DB_PORT"]; then
+if [ -z "$RADIUS_DB_PORT" ]; then
   export RADIUS_DB_PORT=3306
 fi
-if [ -z "$RADIUS_DB_USERNAME"]; then
+if [ -z "$RADIUS_DB_USERNAME" ]; then
   export RADIUS_DB_USERNAME=radius
 fi
-if [ -z "$RADIUS_DB_PASSWORD"]; then
+if [ -z "$RADIUS_DB_PASSWORD" ]; then
   export RADIUS_DB_PASSWORD=radpass
 fi
-if [ -z "$RADIUS_DB_NAME"]; then
+if [ -z "$RADIUS_DB_NAME" ]; then
   export RADIUS_DB_NAME=radius
 fi
 
@@ -110,7 +110,7 @@ envsubst '
          ${RADIUS_DB_NAME}
          ' < sql.conf.template > /etc/freeradius/sql.conf
 
-if [ -z "$RADIUS_SQL"]; then
+if [ -z "$RADIUS_SQL" ]; then
   export RADIUS_SQL=""
 else
   export RADIUS_SQL=sql
