@@ -10,8 +10,14 @@ resp=$(curl http://rancher-metadata/2015-12-19/self/container/primary_ip) && PRI
 if [ -z "$RADIUS_LISTEN_IP" ]; then
   export RADIUS_LISTEN_IP=${PRIVATE_IP:-127.0.0.1}
 fi
+if [ "$PROXY_ENABLED" = "true" ]; then
+  export PROXY_ENABLED=$'\nproxy_requests  = yes\n$INCLUDE proxy.conf\n'
+else
+  export PROXY_ENABLED=''
+fi
 envsubst '
           ${RADIUS_LISTEN_IP}
+          ${PROXY_ENABLED}
          ' < radiusd.conf.template > /etc/freeradius/radiusd.conf
 
 if [ -z "$USERS_FILE" ]; then
@@ -47,11 +53,6 @@ envsubst '${RADIUS_CLIENTS}
 ####################################################################
 ###  Proxy Configuration                                         ###
 ####################################################################
-if [ "$PROXY_ENABLED" = "true" ]; then
-  export PROXY_ENABLED=$'\nproxy_requests  = yes\n$INCLUDE proxy.conf\n'
-else
-  export PROXY_ENABLED=''
-fi
 if [ -n "$PROXY_DEFAULT_AUTH_HOST_PORT" ]; then
   export PROXY_DEFAULT_AUTH_HOST_PORT="authhost=$PROXY_DEFAULT_AUTH_HOST_PORT"
 fi
@@ -72,10 +73,6 @@ else
   export PROXY_DEFAULT_NOSTRIP=''
 fi
 
-envsubst '
-    ${PROXY_ENABLED}
-    ' < radiusd.conf.template > /etc/freeradius/radiusd.conf
-    
 envsubst '
     ${PROXY_DEFAULT_AUTH_HOST_PORT}
     ${PROXY_DEFAULT_ACC_HOST_PORT}
