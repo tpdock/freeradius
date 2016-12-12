@@ -32,6 +32,7 @@ $ docker run -itd \
   --name freeradius \
   -e RADIUS_LISTEN_IP=* \
   -e RADIUS_CLIENTS=secret@127.0.0.1 \
+  -p 1812:1812/udp -p 1813:1813/udp \
   tpdock/freeradius
 ```
 
@@ -44,6 +45,7 @@ $ docker run -itd \
   --name freeradius \
   -e RADIUS_LISTEN_IP=* \
   -e RADIUS_CLIENTS=secret@127.0.0.1 \
+  -p 1812:1812/udp -p 1813:1813/udp \
   -e ROXY_DEFAULT_AUTH_HOST_PORT=127.0.0.2:1812 \
   -e PROXY_DEFAULT_ACC_HOST_PORT=127.0.0.2:1813 \
   -e PROXY_DEFAULT_SECRET=secret \
@@ -70,16 +72,17 @@ mysql:latest
 
 ```
 $ docker run -itd \
---name freeradius \
---link freeradiusdb:mysql \
--e RADIUS_LISTEN_IP=* \
--e RADIUS_CLIENTS=secret@127.0.0.1 \
--e RADIUS_SQL=true \
--e RADIUS_DB_NAME=mysql \
--e RADIUS_DB_NAME=freeradius \
--e RADIUS_DB_USERNAME=freeradius \
--e RADIUS_DB_PASSWORD=freeradius \
-tpdock/freeradius
+  --name freeradius \
+  --link freeradiusdb:mysql \
+  -e RADIUS_LISTEN_IP=* \
+  -e RADIUS_CLIENTS=secret@127.0.0.1 \
+  -p 1812:1812/udp -p 1813:1813/udp \
+  -e RADIUS_SQL=true \
+  -e RADIUS_DB_NAME=mysql \
+  -e RADIUS_DB_NAME=freeradius \
+  -e RADIUS_DB_USERNAME=freeradius \
+  -e RADIUS_DB_PASSWORD=freeradius \
+  tpdock/freeradius
 ```
 
 ### Prepare DB
@@ -96,6 +99,12 @@ docker exec -it freeradius mysql -ufreeradius -pfreeradius -hmysql -e "insert in
 
 ### Test it:
 
+Container IPAddress could be found using:
+
 ```
-radtest test test 172.17.0.3 1812 secret
+docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' freeradius
+```
+
+```
+radtest test test <IPAddress> 1812 secret
 ```
