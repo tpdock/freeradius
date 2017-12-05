@@ -1,6 +1,6 @@
 # FreeRADIUS [![Build Status](https://travis-ci.org/tpdock/freeradius.svg)](https://travis-ci.org/tpdock/freeradius) 
 
-FreeRADIUS 2.2.8 server based on Ubuntu 16.04 with MYSQL support https://hub.docker.com/_/ubuntu/
+FreeRADIUS 2.2.9 server based on Ubuntu 16.04 with MYSQL support https://hub.docker.com/_/ubuntu/
 
 Source: https://github.com/tpdock/freeradius
 
