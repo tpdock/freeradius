@@ -472,7 +472,7 @@ post-auth {
 	#  After authenticating the user, do another SQL query.
 	#
 	#  See "Authentication Logging Queries" in sql.conf
-#	sql
+	sql
 
 	#
 	#  Instead of sending the query to the SQL server,
