@@ -12,6 +12,7 @@ ADD templates/clients.conf.template clients.conf.template
 ADD templates/sql.conf.template sql.conf.template
 ADD templates/files.template files.template
 ADD docker-entrypoint.sh docker-entrypoint.sh
+ADD templates/eap.conf /etc/freeradius/eap.conf
 
 ENTRYPOINT ["./docker-entrypoint.sh"]
 

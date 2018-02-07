@@ -123,6 +123,7 @@ envsubst '
          $RADIUS_SQL
          ' < inner-tunnel.template > /etc/freeradius/sites-available/inner-tunnel
 
+#sed -i 's/"DEFAULT"/"DEFAULT:!TLSv1.2"/g' /etc/freeradius/eap.conf
 ####################################################################
 
 exec "$@"
