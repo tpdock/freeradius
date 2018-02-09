@@ -125,5 +125,23 @@ envsubst '
 
 #sed -i 's/"DEFAULT"/"DEFAULT:!TLSv1.2"/g' /etc/freeradius/eap.conf
 ####################################################################
+###    CERT Configuration                                        ###
+####################################################################
+
+if [ -n "$CERT_CA_PEM" ]; then
+	echo $CERT_CA_PEM | base64 --decode > /etc/freeradius/certs/ca.pem
+fi
+
+if [ -n "$CERT_SERVER_KEY" ]; then
+	echo $CERT_SERVER_KEY | base64 --decode > /etc/freeradius/certs/server.key
+fi
+
+if [ -n "$CERT_SERVER_PEM" ]; then
+	echo $CERT_SERVER_PEM | base64 --decode > /etc/freeradius/certs/server.pem
+fi
+
+if [ -n "$CERT_DH" ]; then
+	echo $CERT_DH| base64 --decode > /etc/freeradius/certs/dh
+fi
 
 exec "$@"
