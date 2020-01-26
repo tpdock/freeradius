@@ -105,7 +105,9 @@ sql {
 	# and security reasons, finding clients via SQL queries CANNOT
 	# be done "live" while the server is running.
 	# 
-	#readclients = yes
+	
+	# I've set to yes in order to load NASes on MySQL Nas Table ####################
+	readclients = yes
 
 	# Table to keep radius client info
 	nas_table = "nas"
